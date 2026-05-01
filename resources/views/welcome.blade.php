@@ -2,112 +2,114 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Special Invitation</title>
+<title>Welcome Surprise</title>
 
 <style>
-body {
-    margin: 0;
-    overflow: hidden;
-    font-family: Arial, sans-serif;
-    color: white;
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:Arial;
+    overflow:hidden;
 }
 
-/* 🎥 خلفية فيديو */
-#bgVideo {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: -2;
+/* 🎬 الفيديو الخلفية */
+.bg-video{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    z-index:-1;
 }
 
-/* 🌑 طبقة تغبيش */
-.overlay {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.4);
-    z-index: -1;
+/* 💖 الكرت */
+.box{
+    text-align:center;
+    color:white;
+    background:rgba(0,0,0,0.4);
+    padding:25px;
+    border-radius:20px;
+    backdrop-filter: blur(8px);
+    width:85%;
+    max-width:350px;
+    position:relative;
+    z-index:1;
 }
 
-/* 💎 كرت احترافي */
-.card {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(255,255,255,0.12);
-    backdrop-filter: blur(12px);
-    padding: 30px;
-    border-radius: 20px;
-    width: 85%;
-    max-width: 380px;
-    text-align: center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+/* الأزرار */
+.buttons{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    margin-top:15px;
+    align-items:center;
 }
 
-/* ✨ عنوان */
-h2 {
-    margin-bottom: 20px;
-    font-size: 20px;
+button{
+    width:150px;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    font-size:16px;
+    cursor:pointer;
 }
 
-/* 🔘 أزرار */
-button {
-    width: 100%;
-    padding: 14px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 12px;
-    font-size: 16px;
-    cursor: pointer;
+/* Yes */
+.yes{
+    background:white;
+    color:#ff4d6d;
+    font-weight:bold;
 }
 
-.yes {
-    background: #ff4d6d;
-    color: white;
-    font-weight: bold;
-}
-
-.no {
-    background: #444;
-    color: white;
-    position: absolute;
-    transition: all 0.3s ease;
+/* No */
+.no{
+    background:#333;
+    color:white;
+    position:absolute;
+    transition:0.2s;
 }
 </style>
 </head>
 
 <body>
 
-<!-- 🎥 فيديو -->
-<video autoplay muted loop playsinline id="bgVideo">
+<!-- 🎬 الفيديو -->
+<video autoplay muted loop playsinline class="bg-video">
     <source src="{{ asset('videos/bj.mp4.mp4') }}" type="video/mp4">
 </video>
 
-<div class="overlay"></div>
-
-<!-- 💎 كرت -->
-<div class="card">
+<!-- 💖 الكرت -->
+<div class="box">
     <h2>Will you open your surprise? 🎁</h2>
 
-    <button class="yes" onclick="location.href='/birthday'">Yes 💖</button>
+    <div class="buttons">
+        <button class="yes" onclick="go()">Yes 💖</button>
+    </div>
+
     <button class="no" id="noBtn">No 😢</button>
 </div>
 
 <script>
+function go(){
+    window.location.href="/birthday";
+}
 
-// 🏃 زر No يهرب بسلاسة
-let noBtn = document.getElementById("noBtn");
+const noBtn = document.getElementById("noBtn");
 
-noBtn.addEventListener("mouseover", function () {
+noBtn.addEventListener("mouseover", moveNo);
+noBtn.addEventListener("touchstart", moveNo);
+
+function moveNo(){
     let x = Math.random() * (window.innerWidth - 120);
     let y = Math.random() * (window.innerHeight - 120);
 
     noBtn.style.left = x + "px";
     noBtn.style.top = y + "px";
-});
-
+}
 </script>
 
 </body>
